@@ -48,7 +48,10 @@ const CompanyDetailScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.card}>
           <View style={styles.headerBox}>
-            <Image source={{ uri: company.logo || 'https://itviec.com/favicon.ico' }} style={styles.logo} />
+            <Image
+               source={require('../../assets/company.png')}
+              style={styles.logo}
+            />
             <Text style={styles.name}>{company.name}</Text>
             <Text style={styles.industry}>{company.industry}</Text>
             <View style={styles.badgeRow}>

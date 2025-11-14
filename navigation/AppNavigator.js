@@ -9,6 +9,10 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import EditJobScreen from '../screens/AddEditJob/EditJobScreen';
 import CompanyDetailScreen from '../screens/Company/CompanyDetailScreen';
 import EditCompanyScreen from '../screens/Company/EditCompanyScreen';
+import ApplicationListScreen from '../screens/Applications/ApplicationListScreen';
+import ApplicationDetailScreen from '../screens/Applications/ApplicationDetailScreen';
+import ApplicationByJobScreen from '../screens/Applications/ApplicationByJobScreen';
+import RecruiterInformationDetailScreen from '../screens/Recruiters/RecruiterInformationDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +27,7 @@ const AppNavigator = () => (
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
-                options={{ title: "Trang chủ", headerShown: false }}
+                options={{ title: "Trang chủ", headerShown: false }}s
             />
             <Stack.Screen
                 name="JobList"
@@ -54,6 +58,26 @@ const AppNavigator = () => (
                 name="EditCompany"
                 component={EditCompanyScreen}
                 options={{ title: "Sửa thông tin công ty" }}
+            />
+            <Stack.Screen
+                name="ApplicationList"
+                component={ApplicationListScreen}
+                options={{ title: 'Ứng viên đã ứng tuyển' }}
+            />
+            <Stack.Screen
+                name="ApplicationByJob"
+                component={ApplicationByJobScreen}
+                options={{ title: 'Ứng viên theo công việc' }}
+            />
+            <Stack.Screen
+                name="ApplicationDetail"
+                component={ApplicationDetailScreen}
+                options={{ title: 'Chi tiết ứng viên' }}
+            />
+            <Stack.Screen
+                name="RecruiterInformationDetail"
+                component={RecruiterInformationDetailScreen}
+                options={{ title: 'Thông tin nhà tuyển dụng' }}
             />
         </Stack.Navigator>
     </NavigationContainer>

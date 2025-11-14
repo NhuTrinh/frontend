@@ -1,57 +1,62 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const features = [
-  { key: 'recommended', label: 'Recommended Jobs', icon: require('../../assets/jobs.png') },
-  { key: 'applied', label: 'Applied Jobs', icon: require('../../assets/jobs.png') },
-  { key: 'saved', label: 'Saved Jobs', icon: require('../../assets/building.png') },
-  { key: 'recent', label: 'Recent Searches', icon: require('../../assets/building.png') },
-  { key: 'map', label: 'Map Search', icon: require('../../assets/people.png') },
-  { key: 'parttime', label: 'Part time Jobs', icon: require('../../assets/people.png') },
+  { key: 'recommended', label: 'Công việc', icon: require('../../assets/jobs.png'), color: '#EEEEEE' },
+  { key: 'applied', label: 'Ứng viên', icon: require('../../assets/people.png'), color: '#EEEEEE' },
+  { key: 'saved', label: 'Công ty', icon: require('../../assets/building.png'), color: '#EEEEEE' },
+  { key: 'recent', label: 'Nhà tuyển dụng', icon: require('../../assets/recruiter.png'), color: '#EEEEEE' },
 ];
 
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.headerBox}>
-        <Text style={styles.headerTitle}>Customer Service Representative</Text>
-        <Text style={styles.location}>Current Location</Text>
+      <LinearGradient colors={['#337ab7', '#4caf50']} style={styles.headerBox}>
+        <View style={styles.headerTop}>
+          <Image
+            source={require('../../assets/avatar.png')}
+            style={styles.avatar}
+          />
+          <View>
+            <Text style={styles.headerTitle}>Dành cho nhà tuyển dụng</Text>
+            <Text style={styles.location}>Thành phố Hồ Chí Minh</Text>
+          </View>
+        </View>
         <TouchableOpacity style={styles.searchBtn}>
-          <Text style={styles.searchBtnText}>Begin Your Job Search!</Text>
+          <Text style={styles.searchBtnText}>Bắt đầu khám phá!</Text>
         </TouchableOpacity>
-      </View>
-      {/* Features grid */}
-      <Text style={styles.sectionTitle}>Your Jobs And Activity</Text>
+      </LinearGradient>
+
+      {/* Features Grid */}
+      <Text style={styles.sectionTitle}>Chức năng</Text>
       <View style={styles.grid}>
-        {features.slice(0,4).map((f, idx) => (
+        {features.slice(0, 4).map((f, idx) => (
           <TouchableOpacity
             key={f.key}
-            style={styles.gridItem}
-            onPress={idx === 2 ? () => navigation.navigate('CompanyDetail') : undefined}
+            style={[styles.gridItem, { backgroundColor: f.color + '20' }]}
+            onPress={
+              idx === 1
+                ? () => navigation.navigate('ApplicationList')
+                : idx === 2
+                  ? () => navigation.navigate('CompanyDetail')
+                  : idx === 0
+                    ? () => navigation.navigate('JobList')
+                    : idx === 3
+                      ? () => navigation.navigate('RecruiterInformationDetail')
+                      : undefined
+            }
           >
-            <Image source={f.icon} style={styles.icon} />
+            <LinearGradient
+              colors={[f.color, '#fff']}
+              style={styles.iconWrapper}
+            >
+              <Image source={f.icon} style={styles.icon} />
+            </LinearGradient>
             <Text style={styles.gridLabel}>{f.label}</Text>
           </TouchableOpacity>
         ))}
-      </View>
-      <Text style={styles.sectionTitle}>Not Sure Where To Begin?</Text>
-      <View style={styles.grid}>
-        {features.slice(4).map(f => (
-          <TouchableOpacity key={f.key} style={styles.gridItem}>
-            <Image source={f.icon} style={styles.icon} />
-            <Text style={styles.gridLabel}>{f.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      {/* Bottom tab bar */}
-      <View style={styles.tabBar}>
-        <TouchableOpacity style={styles.tabItem} onPress={() => navigation.navigate('JobList')}>
-          <Text style={styles.tabLabel}>Jobs</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}><Text style={styles.tabLabel}>Resume</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}><Text style={styles.tabLabel}>Profile</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}><Text style={styles.tabLabel}>Settings</Text></TouchableOpacity>
       </View>
     </View>
   );
@@ -64,86 +69,85 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   headerBox: {
-    backgroundColor: '#337ab7',
-    padding: 16,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    padding: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  headerTop: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 12,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   headerTitle: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
   },
   location: {
-    color: '#fff',
-    fontSize: 15,
-    marginBottom: 12,
+    color: '#e0f2f1',
+    fontSize: 14,
+    marginTop: 2,
   },
   searchBtn: {
-    backgroundColor: '#4caf50',
-    borderRadius: 8,
+    marginTop: 10,
+    backgroundColor: '#fff',
     paddingVertical: 10,
-    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
   },
   searchBtnText: {
-    color: '#fff',
+    color: '#4caf50',
     fontWeight: 'bold',
     fontSize: 16,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 18,
-    marginBottom: 8,
+    marginTop: 20,
+    marginBottom: 10,
     marginLeft: 16,
-    color: '#337ab7',
+    color: 'green',
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   gridItem: {
     width: '40%',
-    backgroundColor: '#fff',
     margin: 8,
-    borderRadius: 10,
+    borderRadius: 15,
     alignItems: 'center',
-    padding: 16,
-    elevation: 2,
+    paddingVertical: 20,
+    elevation: 5,
+  },
+  iconWrapper: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginBottom: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
   },
   icon: {
-    width: 36,
-    height: 36,
-    marginBottom: 8,
+    width: 32,
+    height: 32,
   },
   gridLabel: {
     fontSize: 14,
-    color: '#337ab7',
-    textAlign: 'center',
-  },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderColor: '#eee',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  tabItem: {
-    alignItems: 'center',
-  },
-  tabLabel: {
-    color: '#337ab7',
     fontWeight: 'bold',
-    fontSize: 13,
+    color: '#333',
+    textAlign: 'center',
   },
 });
 

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import {KeyboardAvoidingView, View, Text, TextInput, StyleSheet, ScrollView, Button, Alert, Platform, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../service/api';
 import EmployerBanner from '../../components/EmployerBanner';
+import { LinearGradient } from 'expo-linear-gradient';
+import Toast from 'react-native-toast-message';
 
 const cityOptions = ['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng', 'Cần Thơ'];
 const countryOptions = ['Việt Nam', 'USA', 'Singapore', 'Japan'];
@@ -12,7 +14,7 @@ const sizeOptions = ['1-10 nhân viên', '11-50 nhân viên', '51-200 nhân viê
 const EditCompanyScreen = ({ route, navigation }) => {
   const { companyId } = route.params;
   const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [form, setForm] = useState({
     name: '',
     logo: '',
@@ -101,10 +103,20 @@ const EditCompanyScreen = ({ route, navigation }) => {
       await api.put(`/companies/${companyId}`, body, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      Alert.alert('Cập nhật thông tin công ty thành công!');
+      Toast.show({
+            type: 'success',
+            text1: 'Cập nhật thành công',
+            text2: 'Thông tin công ty đã được cập nhật ✔️',
+            position: 'bottom',
+          });
       navigation.goBack();
     } catch (error) {
-      Alert.alert('Lỗi', error?.response?.data?.message || 'Không thể cập nhật công ty');
+      Toast.show({
+            type: 'error',
+            text1: 'Lỗi cập nhật',
+            text2: error?.response?.data?.message || 'Không thể cập nhật công ty.',
+            position: 'bottom',
+          });
     } finally {
       setLoading(false);
     }
@@ -112,22 +124,29 @@ const EditCompanyScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <EmployerBanner />
+      <View style={styles.bannerWrapper}>
+              <EmployerBanner />
+      
+              <LinearGradient
+                colors={['#4caf50', '#66bb6a']}
+                start={[0, 0]}
+                end={[1, 0]}
+                style={styles.createButton}
+              >
+                <TouchableOpacity onPress={handleSubmit}>
+                  <Text style={styles.createButtonText}>Cập nhật công ty</Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            </View>
+       <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20} // điều chỉnh tùy header
+                  >
       <ScrollView contentContainerStyle={styles.content}>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
-          <Button
-            title={isEditing ? 'Lưu' : 'Chỉnh sửa'}
-            color="#337ab7"
-            onPress={() => {
-              if (isEditing) {
-                handleSubmit();
-              } else {
-                setIsEditing(true);
-              }
-            }}
-          />
         </View>
-        <Text style={styles.title}>Sửa thông tin công ty</Text>
+        <Text style={styles.title}>Cập nhật thông tin công ty</Text>
         <TextInput style={styles.input} placeholder="Tên công ty" value={form.name} onChangeText={v => handleChange('name', v)} editable={isEditing} />
         <TextInput style={styles.input} placeholder="Logo URL" value={form.logo} onChangeText={v => handleChange('logo', v)} editable={isEditing} />
         <View style={styles.row}>
@@ -160,6 +179,7 @@ const EditCompanyScreen = ({ route, navigation }) => {
         <TextInput style={styles.input} placeholder="Fanpage URL" value={form.fanpageUrl} onChangeText={v => handleChange('fanpageUrl', v)} editable={isEditing} />
         <TextInput style={styles.input} placeholder="Website URL" value={form.websiteUrl} onChangeText={v => handleChange('websiteUrl', v)} editable={isEditing} />
       </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -190,6 +210,23 @@ const styles = StyleSheet.create({
     minWidth: 120,
   },
   label: { fontSize: 14, color: '#337ab7', marginBottom: 4 },
+  bannerWrapper: {
+  marginBottom: 20,
+},
+
+createButton: {
+  marginTop: 10,
+  paddingVertical: 12,
+  paddingHorizontal: 20,
+  borderRadius: 8,
+  alignItems: "center",
+},
+
+createButtonText: {
+  color: "#fff",
+  fontSize: 16,
+  fontWeight: "bold",
+},
 });
 
 export default EditCompanyScreen;

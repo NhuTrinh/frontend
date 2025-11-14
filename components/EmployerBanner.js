@@ -4,7 +4,7 @@ import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const EmployerBanner = ({ onProfilePress }) => (
   <View style={styles.banner}>
-    <Text style={styles.title}>For Employers</Text>
+    <Text style={styles.title}>TimViec</Text>
     <View style={styles.rightIcons}>
       <TouchableOpacity style={styles.iconBtn}>
         <Icon name="message-outline" size={22} color="#fff" />
@@ -14,7 +14,7 @@ const EmployerBanner = ({ onProfilePress }) => (
       </TouchableOpacity>
       <TouchableOpacity style={styles.profileBtn} onPress={onProfilePress}>
         <View style={styles.profileCircle}>
-          <Text style={styles.profileText}>t</Text>
+          <Text style={styles.profileText}>A</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'linear-gradient(90deg, #3a1c1c 0%, #6e2323 100%)',
-    backgroundColor: '#3a1c1c', // fallback for RN
+    backgroundColor: 'linear-gradient(90deg, #4E56C0 0%, #80A1BA 100%)',
+    backgroundColor: '#476EAE', // fallback for RN
     paddingHorizontal: 16,
     paddingVertical: 10,
     minHeight: 48,
