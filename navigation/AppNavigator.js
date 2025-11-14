@@ -13,12 +13,20 @@ import ApplicationListScreen from '../screens/Applications/ApplicationListScreen
 import ApplicationDetailScreen from '../screens/Applications/ApplicationDetailScreen';
 import ApplicationByJobScreen from '../screens/Applications/ApplicationByJobScreen';
 import RecruiterInformationDetailScreen from '../screens/Recruiters/RecruiterInformationDetailScreen';
+import MainTabs from "./candidate/MainTabs";
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => (
     <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="CandidateTabs"
+            screenOptions={{ headerShown: false }}>
+
+            <Stack.Screen
+                name="CandidateTabs"
+                component={MainTabs}
+            />
+
             <Stack.Screen
                 name="Login"
                 component={LoginScreen}
@@ -27,7 +35,7 @@ const AppNavigator = () => (
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
-                options={{ title: "Trang chủ", headerShown: false }}s
+                options={{ title: "Trang chủ", headerShown: false }} s
             />
             <Stack.Screen
                 name="JobList"
