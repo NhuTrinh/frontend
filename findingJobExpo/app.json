@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "findingJobExpo",
+    "slug": "findingJobExpo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+
+    "scheme": "findingjobexpo",
+
+    "userInterfaceStyle": "light",
+
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+
+    "assetBundlePatterns": ["**/*"],
+
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.findingjob.app",
+      "facebookAppId": "1405068854601683",
+      "facebookDisplayName": "FindingJobExpo"
+    },
+
+    "android": {
+      "package": "com.findingjob.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundColor": "#E6F4FE"
+      },
+      "facebookAppId": "1405068854601683",
+      "facebookDisplayName": "FindingJobExpo",
+      "facebookScheme": "fb1405068854601683"
+    },
+
+    "plugins": ["expo-router"],
+
+    "extra": {
+      "googleClientId": "458378790602-t0m4g631kq79omuvj9epvt2k4sa9hn6a.apps.googleusercontent.com",
+      "facebookAppId": "1405068854601683",
+      "eas": {
+        "projectId": "findingjob-project"
+      }
+    }
+  }
+}
